@@ -52,7 +52,7 @@ Sanitizes text and returns the result
 
 ```bash 
 curl --location --request POST 'http://localhost:8000/sanitize' \
---header 'Content-Type: text/plain' \
+--header 'Content-Type: application/json' \
 --data-raw '{
     "text": "On 10-05-2020, John had met with with Marie"
 }'

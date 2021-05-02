@@ -2,10 +2,9 @@ from typing import Optional
 
 import spacy
 from fastapi import FastAPI, HTTPException
-
-# Change to TRF model for more accuracy
 from pydantic import BaseModel
 
+# Change to TRF model for more accuracy
 nlp = spacy.load('en_core_web_md')
 app = FastAPI()
 
@@ -24,11 +23,11 @@ def anonymize(token, sensitive_ents):
 
 
 def spacy_sanitize(text, sensitive_ents):
-    sp_doc = nlp(text)
-    with sp_doc.retokenize() as retokenizer:
-        for ent in sp_doc.ents:
+    tokenized_doc = nlp(text)
+    with tokenized_doc.retokenize() as retokenizer:
+        for ent in tokenized_doc.ents:
             retokenizer.merge(ent)
-    tokens = map(lambda doc_iterable: anonymize(doc_iterable, sensitive_ents), sp_doc)
+    tokens = map(lambda token: anonymize(token, sensitive_ents), tokenized_doc)
     return "".join(tokens)
 
 
@@ -38,4 +37,4 @@ def sanitize(sanitizable_item: Sanitizable):
         sanitized_text = spacy_sanitize(sanitizable_item.text, sanitizable_item.sensitive_ents)
         return {"sanitized_text": sanitized_text}
     except Exception:
-        raise HTTPException(status_code=500, detail="Sanitization Failure. ")
+        raise HTTPException(status_code=500, detail="Sanitization Failure")

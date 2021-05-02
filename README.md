@@ -1,7 +1,7 @@
 
 # Sanitizer Microservice
 
-Straightforward microservice that sanitizes/scrubs text provided to it via a REST API using the NLP technique of named entity recognition
+Straightforward microservice that sanitizes/scrubs text provided to it via a REST API using the NLP technique of [named entity recognition](https://en.wikipedia.org/wiki/Named-entity_recognition)
 
 Built with [spaCy](http://spacy.io) and [FastAPI](https://fastapi.tiangolo.com/)
 
